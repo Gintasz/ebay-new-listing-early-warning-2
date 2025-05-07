@@ -12,8 +12,6 @@ from urllib.parse import urlparse
 import requests
 from lxml import html
 
-import config_gui
-
 global con
 
 MAX_RETRIES = 5
@@ -168,8 +166,6 @@ if __name__ == '__main__':
 
     options = parser.parse_args()
     filename = options.path
-    if not options.nogui:
-        config_gui.GUI(filename)
 
     # There must be a better way
     while True:
