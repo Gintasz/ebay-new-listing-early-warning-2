@@ -48,7 +48,7 @@ def sql_connection(file_name):
         print(Error)
 
 
-def scraper(url, apikey, chatid, sleep):
+def scraper(url, apikey, chatid, sleep, max_price):
     global con
     cursordb = con.cursor()
 
@@ -94,6 +94,13 @@ def scraper(url, apikey, chatid, sleep):
         # If the id is already present on the table, cursor.execute() will raise an sqlite3.IntegrityError exception which will skip the process of sending the link
         # as a telegram message
         for prodstr in productlist:
+            price_str = prodstr[1]
+            price_str = price_str.split(" to ")[1] if " to " in price_str else price_str
+            price_str = price_str.replace("$", "").replace(",", "")
+            price_float = float(price_str)
+            if price_float > float(max_price):
+                # If the price is higher than the max price, skip this listing
+                continue
             try:
                 # Insert the id and the timestamp
                 cursordb.execute("INSERT INTO identifiers(id,listingDate) VALUES(?,?)",
@@ -118,6 +125,7 @@ def scraper(url, apikey, chatid, sleep):
                 pass
         con.commit()
         # Wait before repeting the process
+        print("Sleeping for " + str(sleep) + " seconds")
         time.sleep(int(sleep))
 
 
@@ -132,6 +140,7 @@ def startup(filename_path):
         chatid = config["telegramCHATID"]
         dbname = config["databaseFile"]
         sleep = config["sleep"]
+        max_price = config["maxPrice"]
 
     config_file.close()
 
@@ -145,7 +154,7 @@ def startup(filename_path):
     signal(SIGINT, exit_handler)
 
     # Start the scraper
-    scraper(url, apikey, chatid, sleep)
+    scraper(url, apikey, chatid, sleep, max_price)
 
 
 if __name__ == '__main__':

@@ -1,0 +1,9 @@
+version: '3.8'
+
+services:
+  ebay-listings-early-warning:
+    build: .
+    container_name: ebay-listings-early-warning
+    restart: unless-stopped
+    volumes:
+      - ./data:/app/data

@@ -1,0 +1,8 @@
+{
+    "url": "https://www.ebay.com/sch/i.html?_nkw=macbook+air+15+m3&_sacat=0&_from=R40&_stpos=97062&LH_BIN=1&_fcid=1&SSD%2520Capacity=1%2520TB%7C2%2520TB&RAM%2520Size=24%2520GB%7C32%2520GB&Series=MacBook%2520Air&Release%2520Year=2024%7C2025&_dcat=111422&_sop=10",
+    "telegramAPIKEY": "",
+    "telegramCHATID": "",
+    "databaseFile": "data/database.db",
+    "sleep": "300",
+    "maxPrice": "1100"
+}
